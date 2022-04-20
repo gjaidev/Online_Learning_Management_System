@@ -19,4 +19,5 @@ public class AccountType implements Serializable {
     private int account_id;
     private String account_Password;
     private String account_email;
+    private String account_role;
 }
