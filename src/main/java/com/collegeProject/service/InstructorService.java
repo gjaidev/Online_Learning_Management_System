@@ -1,10 +1,7 @@
 package com.collegeProject.service;
 
 import com.collegeProject.model.*;
-import com.collegeProject.repository.DepartmentRepository;
-import com.collegeProject.repository.InstructorRepository;
-import com.collegeProject.repository.SurveyRepository;
-import com.collegeProject.repository.WorkshopRepository;
+import com.collegeProject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +18,12 @@ public class InstructorService {
     private SurveyRepository surveyRepository;
     @Autowired
     private WorkshopRepository workshopRepository;
+    @Autowired
+    private CourseRepository courseRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private StudentCourseRepository studentCourseRepository;
 
     public Instructor saveInstructor(Instructor instructor){
        return repository.save(instructor);
@@ -45,6 +48,29 @@ public class InstructorService {
 
     public InstructorDetails getInstructorDetails(int instructor_id){
         Instructor existingInstructor = repository.findById(instructor_id).orElse(null);
+        List<Course> coursesExisting = courseRepository.findAll();
+        List<Course> courses = new ArrayList<>();
+        for(int j=0;j<coursesExisting.size();j++){
+                if(coursesExisting.get(j).getCourse_id()==existingInstructor.getCourse_id()){
+                    courses.add(coursesExisting.get(j));
+                }
+        }
+        List<StudentCourse> studentCourses = studentCourseRepository.findAll();
+        List<StudentCourse> requiredStuCourses = new ArrayList<>();
+        for(int i=0;i<studentCourses.size();i++){
+            for(int j=0;j<courses.size();j++)
+            if(studentCourses.get(i).getCourse_id()==courses.get(j).getCourse_id()){
+                requiredStuCourses.add(studentCourses.get(i));
+            }
+        }
+        List<Student> allStudents = studentRepository.findAll();
+        List<Student> reqStudents = new ArrayList<>();
+        for(int i=0;i<allStudents.size();i++){
+            for(int j=0;j<requiredStuCourses.size();j++)
+                if(allStudents.get(i).getStudent_id()==requiredStuCourses.get(j).getStudent_id()){
+                    reqStudents.add(allStudents.get(i));
+                }
+        }
         List<Department> departments = departmentRepository.findAll();
         List<Survey> surveys = surveyRepository.findAll();
         List<Workshop> workshops = workshopRepository.findAll();
@@ -76,6 +102,7 @@ public class InstructorService {
         instructorDetails.setDepartments(reqDepts);
         instructorDetails.setSurveys(reqSurveys);
         instructorDetails.setWorkshops(reqWorkshops);
+        instructorDetails.setStudents(reqStudents);
         return instructorDetails;
     }
 

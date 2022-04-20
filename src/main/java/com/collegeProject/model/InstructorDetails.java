@@ -21,4 +21,5 @@ public class InstructorDetails implements Serializable {
     private List<Department> departments;
     private List<Survey> surveys;
     private List<Workshop> workshops;
+    private List<Student> students;
 }
