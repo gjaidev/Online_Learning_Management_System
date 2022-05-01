@@ -24,6 +24,10 @@ public class InstructorService {
     private StudentRepository studentRepository;
     @Autowired
     private StudentCourseRepository studentCourseRepository;
+    @Autowired
+    private ForumRepository forumRepository;
+    @Autowired
+    private AnnouncementsRepository announcementsRepository;
 
     public Instructor saveInstructor(Instructor instructor){
        return repository.save(instructor);
@@ -74,6 +78,8 @@ public class InstructorService {
         List<Department> departments = departmentRepository.findAll();
         List<Survey> surveys = surveyRepository.findAll();
         List<Workshop> workshops = workshopRepository.findAll();
+        List<Forum> allForums = forumRepository.findAll();
+        List<Announcements> allAnnouncements = announcementsRepository.findAll();
         List<Department> reqDepts = new ArrayList<>();
         List<Survey> reqSurveys = new ArrayList<>();
         List<Workshop> reqWorkshops = new ArrayList<>();
@@ -103,6 +109,8 @@ public class InstructorService {
         instructorDetails.setSurveys(reqSurveys);
         instructorDetails.setWorkshops(reqWorkshops);
         instructorDetails.setStudents(reqStudents);
+        instructorDetails.setForums(allForums);
+        instructorDetails.setAnnouncements(allAnnouncements);
         return instructorDetails;
     }
 

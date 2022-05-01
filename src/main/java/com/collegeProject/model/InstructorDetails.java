@@ -22,4 +22,6 @@ public class InstructorDetails implements Serializable {
     private List<Survey> surveys;
     private List<Workshop> workshops;
     private List<Student> students;
+    private List<Forum> forums;
+    private List<Announcements> announcements;
 }

@@ -5,6 +5,8 @@ import com.collegeProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class OnlineLearningController {
@@ -24,6 +26,8 @@ public class OnlineLearningController {
     private ForumService forumService;
     @Autowired
     private FeedbackService feedbackService;
+    @Autowired
+    private AnnouncementsService announcementsService;
 
 
     @RequestMapping(value = "/getUserDetails",method = RequestMethod.GET)
@@ -48,9 +52,24 @@ public class OnlineLearningController {
         return instructorService.getInstructorDetails(instructor_id);
     }
 
-    @RequestMapping(value = "/createForum",method = RequestMethod.PUT)
+    @RequestMapping(value = "/createForum",method = RequestMethod.POST)
     public Forum saveForumDetails(@RequestBody Forum forum){
         return forumService.saveForum(forum);
+    }
+
+    @RequestMapping(value = "/getAllForums",method = RequestMethod.GET)
+    public List<Forum> getForumDetails(){
+        return forumService.getForum();
+    }
+
+    @RequestMapping(value = "/createAnnouncement",method = RequestMethod.POST)
+    public Announcements saveAnnouncementDetails(@RequestBody Announcements announcement){
+        return announcementsService.saveAnnouncement(announcement);
+    }
+
+    @RequestMapping(value = "/getAnnouncements",method = RequestMethod.GET)
+    public List<Announcements> getAnnouncementDetails(){
+        return announcementsService.getAllAnnouncements();
     }
 
     @RequestMapping(value = "/saveAccountDetails",method = RequestMethod.PUT)

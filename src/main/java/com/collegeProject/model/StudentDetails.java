@@ -24,4 +24,5 @@ public class StudentDetails implements Serializable {
     private List<Grade> student_grades;
     private List<Instructor> student_instructors;
     private List<Forum> student_forums;
+    private List<Announcements> announcements;
 }

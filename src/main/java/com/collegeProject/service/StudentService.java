@@ -30,6 +30,8 @@ public class StudentService {
     private InstructorRepository instructorRepository;
     @Autowired
     private StudentCourseRepository studentCourseRepository;
+    @Autowired
+    private AnnouncementsRepository announcementsRepository;
 
     public Student saveStudent(Student student){
        return repository.save(student);
@@ -126,12 +128,13 @@ public class StudentService {
             }
         }
         List<Forum> allForums = forumRepository.findAll();
-        List<Forum> reqForums = new ArrayList<>();
-        for(int i=0;i<allForums.size();i++){
-            if(allForums.get(i).getStudent_id()==student_id){
-                reqForums.add(allForums.get(i));
-            }
-        }
+//        List<Forum> reqForums = new ArrayList<>();
+//        for(int i=0;i<allForums.size();i++){
+//            if(allForums.get(i).getStudent_id()==student_id){
+//                reqForums.add(allForums.get(i));
+//            }
+//        }
+        List<Announcements> allAnnouncements = announcementsRepository.findAll();
         StudentDetails studentDetails = new StudentDetails();
         studentDetails.setStudent_email(existingStudent.getStudent_email());
         studentDetails.setStudent_name(existingStudent.getStudent_name());
@@ -145,7 +148,8 @@ public class StudentService {
         studentDetails.setStudent_semester(existingSemester);
         studentDetails.setStudent_fee(fees);
         studentDetails.setStudent_instructors(reqInstructors);
-        studentDetails.setStudent_forums(reqForums);
+        studentDetails.setStudent_forums(allForums);
+        studentDetails.setAnnouncements(allAnnouncements);
         return studentDetails;
     }
 }
