@@ -19,6 +19,7 @@ public class StudentDetails implements Serializable {
     private List<Course> student_courses;
     private Fees student_fee;
     private Semester student_semester;
+    private Portfolio portfolio;
     private List<Exam> student_exams;
     private List<Assignment> student_assignments;
     private List<Grade> student_grades;

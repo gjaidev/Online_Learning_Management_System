@@ -32,6 +32,8 @@ public class StudentService {
     private StudentCourseRepository studentCourseRepository;
     @Autowired
     private AnnouncementsRepository announcementsRepository;
+    @Autowired
+    private PortfolioRepository portfolioRepository;
 
     public Student saveStudent(Student student){
        return repository.save(student);
@@ -87,6 +89,13 @@ public class StudentService {
         for(int i=0;i<existingSemesters.size();i++){
             if(existingSemesters.get(i).getStudent_id()==student_id){
                 existingSemester = existingSemesters.get(i);
+            }
+        }
+        List<Portfolio> allPortfolios = portfolioRepository.findAll();
+        Portfolio portfolio = new Portfolio();
+        for(int i=0;i<allPortfolios.size();i++){
+            if(allPortfolios.get(i).getStudent_id()==student_id){
+                portfolio = allPortfolios.get(i);
             }
         }
         List<Fees> existingFees = feesRepository.findAll();
@@ -146,6 +155,7 @@ public class StudentService {
         studentDetails.setStudent_grades(reqGrades);
         studentDetails.setStudent_assignments(reqAssigments);
         studentDetails.setStudent_semester(existingSemester);
+        studentDetails.setPortfolio(portfolio);
         studentDetails.setStudent_fee(fees);
         studentDetails.setStudent_instructors(reqInstructors);
         studentDetails.setStudent_forums(allForums);
